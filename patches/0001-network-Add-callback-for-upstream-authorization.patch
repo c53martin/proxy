@@ -280,7 +280,7 @@ index eb32a8ec84..3fab42bdc0 100644
    StreamInfo::StreamInfo& upstreamStreamInfo() override { return upstream_request_.streamInfo(); }
    OptRef<GenericUpstream> upstream() override {
 diff --git a/source/common/tcp_proxy/tcp_proxy.cc b/source/common/tcp_proxy/tcp_proxy.cc
-index 9bc074f393..8d035b5cad 100644
+index 9bc074f393..7c645872fa 100644
 --- a/source/common/tcp_proxy/tcp_proxy.cc
 +++ b/source/common/tcp_proxy/tcp_proxy.cc
 @@ -571,6 +571,13 @@ bool Filter::maybeTunnel(Upstream::ThreadLocalCluster& cluster) {
@@ -289,7 +289,7 @@ index 9bc074f393..8d035b5cad 100644
    if (generic_conn_pool_) {
 +    bool accepted = read_callbacks_->iterateUpstreamCallbacks(generic_conn_pool_->host(), getStreamInfo());
 +    if (!accepted) {
-+      getStreamInfo().setResponseFlag(StreamInfo::ResponseFlag::UnauthorizedExternalService);
++      getStreamInfo().setResponseFlag(StreamInfo::CoreResponseFlag::UnauthorizedExternalService);
 +      onInitFailure(UpstreamFailureReason::UnauthorizedExternalService);
 +      return true;
 +    }
